@@ -131,6 +131,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     @Transactional
+    @SuppressWarnings("null")
     public void deleteRole(Long id) {
         Role role = roleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Role", "id", id));

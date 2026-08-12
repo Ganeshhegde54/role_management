@@ -102,6 +102,7 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     @Transactional
+    @SuppressWarnings("null")
     public void deletePermission(Long id) {
         Permission permission = permissionRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Permission", "id", id));

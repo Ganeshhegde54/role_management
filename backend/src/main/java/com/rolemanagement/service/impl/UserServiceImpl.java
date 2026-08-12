@@ -142,6 +142,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
+    @SuppressWarnings("null")
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));

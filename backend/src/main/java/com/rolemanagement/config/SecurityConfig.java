@@ -52,19 +52,19 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(AbstractHttpConfigurer::disable)
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)) // for H2 console
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .exceptionHandling(exception -> exception
-                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-            )
-            .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
-                .requestMatchers("/h2-console/**").permitAll()
-                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                .anyRequest().authenticated()
-            );
+                .csrf(csrf -> csrf.disable())
+
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)) // for H2
+                                                                                                            // console
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
+                        .requestMatchers("/h2-console/**").permitAll()
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                        .anyRequest().authenticated());
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
@@ -77,7 +77,8 @@ public class SecurityConfig {
         List<String> origins = Arrays.asList(allowedOrigins.split(","));
         configuration.setAllowedOrigins(origins);
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-Requested-With", "Accept", "Origin"));
+        configuration
+                .setAllowedHeaders(List.of("Authorization", "Content-Type", "X-Requested-With", "Accept", "Origin"));
         configuration.setExposedHeaders(List.of("Authorization"));
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(3600L);
