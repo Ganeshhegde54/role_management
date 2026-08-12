@@ -1,6 +1,6 @@
-# Full-Stack Role & Permission Management System (RBAC)
+# Role  Permission Management System (RBAC)
 
-A complete, production-grade **Role and Permission Management System** built with a stateless **Spring Boot 3 REST API** backend and a modern, dynamic **React + Vite + Tailwind CSS** frontend.
+A complete, production-grade **Role and Permission Management System** built with a stateless **Spring Boot 3 REST API** backend and a modern, dynamic **React + Tailwind CSS** frontend.
 
 ---
 
